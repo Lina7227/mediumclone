@@ -1,43 +1,34 @@
 <template>
-    <div class="page-register">
-        <h1 class="page-register__title">Sing up</h1>
-        <router-link :to="{name: 'login'}" class="page-register__link">
+    <div class="page-login">
+        <h1 class="page-login__title">Sign in</h1>
+        <router-link :to="{name: 'register'}" class="page-login__link">
             Need an account?
         </router-link>
         <mcv-validation-errors v-if="validationErrors" :validation-errors="validationErrors" />
         <form
             @submit.prevent="onSubmit"
-            class="page-register__form">
+            class="page-login__form">
 
-            <fieldset class="page-register__fieldset">
+            <fieldset class="page-login__fieldset">
                 <input
-                    class="page-register__input"
-                    type="text"
-                    placeholder="Username"
-                    v-model="username"  
-                />
-            </fieldset>
-
-            <fieldset class="page-register__fieldset">
-                <input
-                    class="page-register__input"
+                    class="page-login__input"
                     type="email"
                     placeholder="Email" 
                     v-model="email"
                 />
             </fieldset>
 
-            <fieldset class="page-register__fieldset">
+            <fieldset class="page-login__fieldset">
                 <input
-                    class="page-register__input"
+                    class="page-login__input"
                     type="password"
                     placeholder="Password" 
                     v-model="password"
                 />
             </fieldset>
 
-            <button class="page-register__button" :disabled="isSubmitting">
-                Sign up
+            <button class="page-login__button" :disabled="isSubmitting">
+                Sign in
             </button>
         </form>
         
@@ -49,13 +40,12 @@
     import { actionTypes } from '@/store/modules/auth';
 
     export default {
-        name: 'Register',
+        name: 'Login',
         components: {
             McvValidationErrors
         },
         data() {
             return {
-                username: '',
                 email: '',
                 password: ''
             }
@@ -72,7 +62,6 @@
             onSubmit() {
                 console.log('subbmitted form');
                 this.$store.dispatch(actionTypes.register, {
-                    username: this.username,
                     email: this.email,
                     password: this.password
                 })
@@ -86,7 +75,7 @@
 </script>
 
 <style>
-    .page-register {
+    .page-login {
         display: flex;
         flex-direction: column;
         margin: 0 auto;
@@ -94,7 +83,7 @@
         font-family: "Source Sans Pro", Arial, Helvetica, sans-serif;
     }
 
-    .page-register__title {
+    .page-login__title {
         font-size: 40px;
         font-weight: 500;
         line-height: 1.1;
@@ -102,7 +91,7 @@
         margin: 0 0 8px;
     }
 
-    .page-register__form {
+    .page-login__form {
         display: flex;
         margin: 0;
         padding: 0;
@@ -111,13 +100,13 @@
         align-items: center;
     }
 
-    .page-register__fieldset {
+    .page-login__fieldset {
         margin: 16px 0 0;
         padding: 0;
         border: none;
     }
 
-    .page-register__input {
+    .page-login__input {
         margin: 0;
         padding: 12px 24px;
         font-size: 20px;
@@ -129,7 +118,7 @@
         box-sizing: border-box;
     }
 
-    .page-register__button {
+    .page-login__button {
         width: 300px;
         background-color: #5CB85C;
         padding: 12px 24px;
@@ -141,13 +130,12 @@
         border: 1px solid rgba(0, 0, 0, 0.15);
     }
 
-    .page-register__link {
+    .page-login__link {
         color: #5CB85C;
         text-decoration: none;
         text-align: center;
         font-size: 16px;
         line-height: 20px;
     }
-
 
 </style>
