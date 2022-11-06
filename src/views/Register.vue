@@ -2,9 +2,9 @@
     <div class="page-register">
         <h1 class="page-register__title">Sing up</h1>
         <router-link :to="{name: 'login'}" class="page-register__link">
-            Need an account?
+            Have an account?
         </router-link>
-        <mcv-validation-errors v-if="validationErrors" :validation-errors="validationErrors" />
+        <mcv-validation-errors v-if="validationErrors" :validation-errors="validationErrors" class="page-register__error"/>
         <form
             @submit.prevent="onSubmit"
             class="page-register__form">
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
+
     import McvValidationErrors from '@/components/ValidationErrors';
     import { actionTypes } from '@/store/modules/auth';
 
@@ -61,12 +63,10 @@
             }
         },
         computed: {
-            isSubmitting() {
-                return this.$store.state.auth.isSubmitting
-            },
-            validationErrors() {
-                return this.$store.state.auth.validationErrors
-            }
+            ...mapState({
+                isSubmitting: state => state.auth.isSubmitting,
+                validationErrors: state => state.auth.validationErrors
+            })
         },
         methods: {
             onSubmit() {
@@ -149,5 +149,11 @@
         line-height: 20px;
     }
 
+    .page-register__error {
+        color: #B85C5C;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 20px;
+    }
 
 </style>

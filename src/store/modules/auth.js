@@ -22,6 +22,24 @@ export const actionTypes = {
     login: '[auth] login'
 };
 
+export const getterTypes = {
+    currentUser: '[auth] currentUser',
+    isLoggedIn: '[auth] isLoggedIn',
+    isAnonymous: '[auth] isAnonymous'
+};
+
+const getters = {
+    [getterTypes.currentUser]: state => {
+        return state.currentUser;
+    },
+    [getterTypes.isLoggedIn]: state => {
+        return Boolean(state.isLoggedIn)
+    },
+    [getterTypes.isAnonymous]: state => {
+        return state.isAnonymous
+    }
+};
+
 const mutations = {
     [mutationTypes.registerStart](state) {
         state.isSubmitting = true;
@@ -66,11 +84,27 @@ const actions = {
                     context.commit(mutationTypes.registerFailure, result.response.data.errors);
                 })
         })
+    },
+    [actionTypes.login](context, credentials) {
+        return new Promise(resolve => {
+            context.commit(mutationTypes.loginStart);
+            authApi.login(credentials)
+                .then(response => {
+                    console.log("response", response);
+                    context.commit(mutationTypes.loginSuccess, response.data.user);
+                    setItem('accessToken', response.data.user.token);
+                    resolve(response.data.user);
+                })
+                .catch(result => {
+                    context.commit(mutationTypes.loginFailure, result.response.data.errors);
+                })
+        })
     }
 }
 
 export default {
     state,
     mutations,
-    actions
+    actions,
+    getters
 };

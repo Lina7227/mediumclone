@@ -4,7 +4,7 @@
         <router-link :to="{name: 'register'}" class="page-login__link">
             Need an account?
         </router-link>
-        <mcv-validation-errors v-if="validationErrors" :validation-errors="validationErrors" />
+        <mcv-validation-errors v-if="validationErrors" :validation-errors="validationErrors" class="page-login__error"/>
         <form
             @submit.prevent="onSubmit"
             class="page-login__form">
@@ -36,6 +36,8 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
+
     import McvValidationErrors from '@/components/ValidationErrors';
     import { actionTypes } from '@/store/modules/auth';
 
@@ -51,22 +53,19 @@
             }
         },
         computed: {
-            isSubmitting() {
-                return this.$store.state.auth.isSubmitting
-            },
-            validationErrors() {
-                return this.$store.state.auth.validationErrors
-            }
+            ...mapState({
+                isSubmitting: state => state.auth.isSubmitting,
+                validationErrors: state => state.auth.validationErrors
+            })
         },
         methods: {
             onSubmit() {
                 console.log('subbmitted form');
-                this.$store.dispatch(actionTypes.register, {
+                this.$store.dispatch(actionTypes.login, {
                     email: this.email,
                     password: this.password
                 })
-                .then(user => {
-                    console.log("register user", user);
+                .then(() => {
                     this.$router.push({name: 'home'});
                 })
             }
@@ -134,6 +133,13 @@
         color: #5CB85C;
         text-decoration: none;
         text-align: center;
+        font-size: 16px;
+        line-height: 20px;
+    }
+
+    .page-login__error {
+        color: #B85C5C;
+        font-weight: bold;
         font-size: 16px;
         line-height: 20px;
     }
