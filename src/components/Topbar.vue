@@ -1,12 +1,12 @@
 <template>
     <nav class="nav__menu">
         <div class="nav__container">
-            <router-link :to="{name: 'home'}" class="nav__logo">
+            <router-link :to="{name: 'globalFeed'}" class="nav__logo">
                 MediumClone
             </router-link>
             <ul class="nav__bar">
                 <li class="nav__item">
-                    <router-link :to="{name: 'home'}" class="nav__link" active-class="nav__link_ative">
+                    <router-link :to="{name: 'globalFeed'}" class="nav__link" active-class="nav__link_ative">
                         Home
                     </router-link>
                 </li>
@@ -53,13 +53,13 @@
     export default {
         name: 'McvTopbar',
         computed: {
-        ...mapGetters({
+            ...mapGetters({
 
-            currentUser: getterTypes.currentUser,
-            isLoggedIn: getterTypes.isLoggedIn,
-            isAnonymous: getterTypes.isAnonymous
-        }),
-    }
+                currentUser: getterTypes.currentUser,
+                isLoggedIn: getterTypes.isLoggedIn,
+                isAnonymous: getterTypes.isAnonymous
+            }),
+        }
     };
 </script>
 
